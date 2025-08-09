@@ -21,12 +21,21 @@ export class RestaurantResolver {
     */
 
     @Query(() => [Restaurant], { name: 'restaurants' })
-    getAllRestaurants() {
+    async getAllRestaurants() {
         return this.restaurantService.getAllRestaurants(); // Service 로직 사용해서 전체 restaurant 반환
     }
 
     /*
         2. 특정 name의 restaurant 가져오기 (Resolver)
         http://localhost:3000/restaurant/find?name=생각나는 순대
+
+        search_name : parameter 이름
+        { type: () => String } : parameter의 GraphQL상 타입 지정
+        search_name : string : parameter의 TypeScript상 타입 지정
     */
+
+    @Query(() => Restaurant, { name: 'restaurants' })
+    async getRestaurantByName(@Args('search_name', { type: () => String }) search_name: string) {
+        return this.restaurantService.getRestaurantByName(search_name);
+    }
 }   
