@@ -27,15 +27,30 @@ export class RestaurantResolver {
 
     /*
         2. 특정 name의 restaurant 가져오기 (Resolver)
-        http://localhost:3000/restaurant/find?name=생각나는 순대
+        http://localhost:3000/graphql
 
         search_name : parameter 이름
         { type: () => String } : parameter의 GraphQL상 타입 지정
         search_name : string : parameter의 TypeScript상 타입 지정
     */
 
-    @Query(() => Restaurant, { name: 'restaurants' })
+    @Query(() => Restaurant)
     async getRestaurantByName(@Args('search_name', { type: () => String }) search_name: string) {
         return this.restaurantService.getRestaurantByName(search_name);
+    }
+
+    /*
+        3. DB에 새로운 restaurant 데이터 추가하기
+        http://localhost:3000/graphql
+
+        Client -> Server로 데이터 전송 : 'InputType DTO' 사용!! (CreateRestaurantInput)
+    */
+
+    @Mutation(() => Restaurant)
+    async addRestaurant(
+        @Args('newRestaurant', { type: () => CreateRestaurantInput})
+        newRestaurant: CreateRestaurantInput
+    ) {
+        return this.restaurantService.addRestaurant(newRestaurant);
     }
 }   

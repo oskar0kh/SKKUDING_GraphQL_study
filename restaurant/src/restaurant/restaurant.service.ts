@@ -3,6 +3,7 @@ import { PrismaService } from '../../../src/prisma/prisma.service'; // 추가!
 
 import { Restaurant, RestaurantList } from './interface/restaurant.interface';
 import { promises } from 'dns';
+import { CreateRestaurantInput } from './dto/create-restaurant.input';
 
 const fs = require('fs');
 const path = require('path');
@@ -55,7 +56,7 @@ export class RestaurantService {
     }
 
     // 3. DB에 새로운 restaurant 데이터 추가하기
-    async addRestaurant(newRestaurant: Omit<Restaurant, 'createdAt' | 'updatedAt'>): Promise<Restaurant> {
+    async addRestaurant(newRestaurant: CreateRestaurantInput): Promise<Restaurant> {
         try {
 
             // 3-1. create 로직 작성

@@ -1,0 +1,33 @@
+meta {
+  name: 새로운 restaurant 데이터 추가
+  type: graphql
+  seq: 3
+}
+
+post {
+  url: http://localhost:3000/graphql
+  body: graphql
+  auth: inherit
+}
+
+body:graphql {
+  mutation {
+    addRestaurant(
+      newRestaurant: {
+        name: "맥도날드"
+        address: "경기도 수원시 어쩌구"
+        phone: "1111-3333-0000"
+        rating: 3.7
+      }
+    ) {
+      name
+      address
+      phone
+      rating
+    }
+  }
+}
+
+settings {
+  encodeUrl: true
+}
